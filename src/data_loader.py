@@ -6,6 +6,7 @@ def load_fi2010(path):
     if data.shape[0] < data.shape[1]:
         data = data.T
     
-    X = data[:, :-5]
-    y = data[:, -5].flatten()
+    X = data[:, :144]
+    y = data[:, -1]     # row 149 = k=10 horizon
+    y = y.flatten()
     return X, y
