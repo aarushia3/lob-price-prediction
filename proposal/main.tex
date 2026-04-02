@@ -1,0 +1,81 @@
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+% Formatting tweaks
+\setlist[itemize]{noitemsep, topsep=2pt}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+    {\Large \textbf{CS498: Algorithmic Engineering}} \\
+    \vspace{2mm}
+    {\large Final Project Proposal} \\
+    \vspace{4mm}
+    \textbf{Predicting Mid-Price Movements using Limit Order Books} \\
+    \vspace{2mm}
+    Aarushi Aggrwal \\
+    \today
+\end{center}
+
+\vspace{5mm}
+
+\section*{Problem}
+Often, knowing only the bid and ask prices of a stock provides limited insight into the market's dynamics. Limit Order Books (LOBs) offer a more comprehensive view by displaying the full depth of buy and sell orders at various price levels. However, this data is often noisy and high-frequency, making it challenging to manually observe trends. In this project, we aim to leverage machine learning techniques to analyze LOB data and predict short-term price movements. By training models on historical LOB data, we hope to uncover patterns that can inform trading strategies and evaluate whether these predictions can be reliably learned from market data.
+
+\section*{Approach}
+This project is a Track C project. Multiple papers will be used as references for the implementation. However, the implementation will be done from scratch.
+
+The system will be implemented in \textbf{Python}, using \textbf{pandas} and \textbf{NumPy} for data processing, \textbf{scikit-learn} for baseline models, \textbf{XGBoost} for gradient boosting, and \textbf{Gurobi} for optimization-based formulations.
+
+Below is an incremental plan for the project:
+\begin{itemize}
+    \item Implement a logistic regression model to predict the mid-price movement based on features extracted from the LOB data. This will be similar to the homework problem (HW6 P2), where \textbf{Gurobi} is used to implement gradient descent.
+    \item Find the best subset of features to use for the regression model using MIP in \textbf{Gurobi}. We will minimize prediction error while constraining the number of features to be less than a certain threshold.
+    \item Compare MIP-based feature selection with simpler methods such as selecting top-k features based on correlation or feature importance.
+    \item Implement a nonlinear model such as Random Forest or XGBoost to capture complex relationships in LOB features, and compare its performance against logistic regression. These models will be implemented using \textbf{scikit-learn} and \textbf{XGBoost}.
+\end{itemize}
+
+We predict mid-price movement at horizon k=10 (predict price movement after the next 10 order book updates), using the three-class labeling scheme provided in FI-2010, and evaluate using weighted F1-score. The three classes correspond to upward, downward, and stationary price movements.
+
+% Which track are you choosing (A, B, or C)? \\
+% Describe what you plan to implement:
+% \begin{itemize}
+%     \item Algorithm / system you will build
+%     \item Any extensions or modifications
+%     \item Tools (e.g., Gurobi, PyTorch, Z3, custom implementation)
+% \end{itemize}
+
+\section*{Baselines}
+% What methods will you compare against?
+\begin{itemize}
+    \item \textbf{Baseline 1:} Randomly predict the mid-price movement. The mid-price is defined as the average of the best bid and best ask prices. This will serve as a baseline for our model's performance.
+    \item \textbf{Baseline 2:} Predict the same direction as the last mid-price movement. This is an intuitive baseline that can be easily implemented and provides a point of comparison for more complex models.
+\end{itemize}
+
+\section*{Data}
+FI-2010 Dataset: \url{https://etsin.fairdata.fi/dataset/73eb48d7-4dbc-4a10-a52a-da745b47a649}.
+
+This data will be used and processed in a similar way as \url{https://www.kaggle.com/datasets/freemanone/fi2010}.
+% What datasets or benchmarks will you use?
+% \begin{itemize}
+%     \item Standard benchmarks (e.g., MIPLIB, TSPLIB, SAT Competition instances)
+%     \item Synthetic or custom-generated data (if applicable)
+% \end{itemize}
+
+\section*{Timeline}
+Brief plan for the upcoming weeks:
+\begin{itemize}
+    \item Week 1 (April 6): Set up environment, preprocess data, perform feature extraction. Implement baseline models.
+    \item Week 2 (April 13): Implement logistic regression model and evaluate against baselines.
+    \item Week 3 (April 20): MIP-based feature selection using Gurobi and evaluate its impact on the regression model.
+    \item Week 4 (April 27): Implement nonlinear models and compare their performance against regression.
+    \item Week 5 (May 4): Consolidate results and write report.
+\end{itemize}
+
+\end{document}
